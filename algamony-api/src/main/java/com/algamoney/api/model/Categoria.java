@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -24,6 +25,7 @@ public class Categoria {
 	private Long codigo;
 	
 	@NotNull
+	@Size(min=3,max=20)
 	private String nome;
 	
 	

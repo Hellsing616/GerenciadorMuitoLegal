@@ -18,41 +18,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algamoney.api.event.RecursoCriadoEvento;
-import com.algamoney.api.model.Categoria;
-import com.algamoney.api.repository.CategoriaRepository;
+import com.algamoney.api.model.Pessoa;
+import com.algamoney.api.repository.PessoaRepository;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaResource {
+@RequestMapping("/pessoas")
+public class PessoaResource {
 	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private PessoaRepository pessoaRepository;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher; //Publicar os eventos da aplicação
 	
 	@GetMapping
-	public List<Categoria> Listar(){
-		return categoriaRepository.findAll();
+	public List<Pessoa> Listar(){
+		return pessoaRepository.findAll();
 		
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
-		Categoria categoriaSalva = categoriaRepository.save(categoria);
-		publisher.publishEvent(new RecursoCriadoEvento(this, response,categoriaSalva.getCodigo()));			
-	    return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
+	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+		publisher.publishEvent(new RecursoCriadoEvento(this, response,pessoaSalva.getCodigo()));			
+	    return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
 	}
 	
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Optional<Categoria>> buscarPeloCodigo(@PathVariable Long codigo) {
-		
-		Optional<Categoria> categoria = categoriaRepository.findById(codigo);
-		 if (categoria.isEmpty())
-			 return ResponseEntity.notFound().build();
+	public ResponseEntity<Optional<Pessoa>> buscarPeloCodigo(@PathVariable Long codigo) {
+		Optional<Pessoa> pessoa = pessoaRepository.findById(codigo);
+		 if (pessoa != null)
+			return ResponseEntity.ok(pessoa);
 		else
-			return ResponseEntity.ok(categoria);
-			
+			return ResponseEntity.notFound().build();
 	}
 
 }

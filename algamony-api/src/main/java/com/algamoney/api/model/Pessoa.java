@@ -25,8 +25,10 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
-	@NotNull
+    @NotNull
 	private String nome;
+	
+	@NotNull
 	private boolean ativo;
 	
 	@Enumerated

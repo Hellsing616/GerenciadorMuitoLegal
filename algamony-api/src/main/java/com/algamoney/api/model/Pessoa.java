@@ -50,6 +50,7 @@ public class Pessoa {
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
+		
 
 	@Override
 	public boolean equals(Object obj) {
